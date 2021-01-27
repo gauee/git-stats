@@ -10,6 +10,18 @@ get_git_logs() {
   fi
 }
 
+get_git_logs_with_date_format() {
+  __extra_params="$1"
+  __date_format="$2"
+  [[ -z $__date_format ]] && __date_format='%a,%Y-%m-%d %H:%M:%S %z'
+  log_debug "Extra params: '$__extra_params', Date format: '$___date_format'"
+  if [[ -z "$__extra_params" ]]; then
+    git log --date=format:$__date_format --pretty=format:"%H|%cd|%an|[%ae]|"
+  else
+    git log "${__extra_params}" --date=format:$__date_format --pretty=format:"%H|%cd|%an|[%ae]|"
+  fi
+}
+
 get_git_logs_with_changes() {
   __extra_params="$1"
   log_debug "Extra params: '$__extra_params'"

@@ -18,7 +18,7 @@ init_repo() {
     log_debug "$_is_git_repo"
   done
   log_debug "Changing location to: $_repo_location"
-  cd "$_repo_location" || echo "Unable to change directory to $_repo_location"
+  cd "$_repo_location" && echo "Repo HEAD $(git log HEAD -1 --date=iso-strict --pretty=format:'commit: %H, Author: %an, Date: %cd' | head -n 1)"
 }
 
 print_help() {
