@@ -1,37 +1,37 @@
 #!/bin/bash
 
-printOption() {
+print_option() {
   echo -e "$1 \t: $2"
 }
 
-initRepo() {
-  read -e -p "Please enter the location of git repository: " repoLocation
-  isGitRepo=$(
-    cd $repoLocation
+init_repo() {
+  read -e -p "Please enter the location of git repository: " _repo_location
+  _is_git_repo=$(
+    cd $_repo_location
     if [ -d .git ]; then echo "yes"; else echo "no"; fi
   )
-  logDebug $isGitRepo
-  while [ "yes" != "$isGitRepo" ]; do
-    invalidRepoLocation=$repoLocation
-    echo "Previously entered location ($invalidRepoLocation) is not a git repo."a
-    read -e -p "Please enter the location of git repository: " repoLocation
-    isGitRepo=$(
-      cd $repoLocation
+  log_debug $_is_git_repo
+  while [ "yes" != "$_is_git_repo" ]; do
+    invalid_repo_location=$_repo_location
+    echo "Previously entered location ($invalid_repo_location) is not a git repo."a
+    read -e -p "Please enter the location of git repository: " _repo_location
+    _is_git_repo=$(
+      cd $_repo_location
       if [ -d .git ]; then echo "yes"; else echo "no"; fi
     )
-    logDebug $isGitRepo
+    log_debug $_is_git_repo
   done
-  logDebug "Changing location to: $repoLocation"
+  log_debug "Changing location to: $_repo_location"
 }
 
-printHelp() {
+print_help() {
   echo "Please select the option to execute:"
-  if [ -z "$repoLocation" ]; then
-    printOption "i, init" "to init the git repo"
+  if [ -z "$_repo_location" ]; then
+    print_option "i, init" "to init the git repo"
   else
-    printOption "ri, reinit" "to change the git repo"
+    print_option "ri, reinit" "to change the git repo"
   fi
-  printOption "1, contributors-performance" "to exit the program"
-  printOption "h, help" "to print help with available options"
-  printOption "e, exit" "to exit the program"
+  print_option "1, contributors-performance" "to exit the program"
+  print_option "h, help" "to print help with available options"
+  print_option "e, exit" "to exit the program"
 }
