@@ -6,6 +6,7 @@ BASE_DIR=$(dirname "$(realpath "$0")")
 source "$BASE_DIR/utils.sh"
 source "$BASE_DIR/init.sh"
 source "$BASE_DIR/contributors-performance.sh"
+source "$BASE_DIR/git-utils.sh"
 
 log_debug "BASE_DIR: $BASE_DIR"
 

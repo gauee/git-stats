@@ -18,3 +18,18 @@ print_header() {
   log_debug "$left_half|$right_half"
   echo "${line:${#left_half}} $1 ${line:${#right_half}}"
 }
+
+print_sub_header() {
+  line=$(printf '\075%.0s' {1..20})
+  left_half="${1:0:${#1}/2}"
+  right_half="${1:${#1}/2}"
+  log_debug "$left_half|$right_half"
+  echo "${line:${#left_half}} $1 ${line:${#right_half}}"
+}
+
+get_top_n_results() {
+  number_of_results=${1:-10}
+  while read line; do
+    echo "$line"
+  done | sort | uniq -c | sort | tail -n $number_of_results | tac
+}
