@@ -11,7 +11,7 @@ logDebug "BASE_DIR: $BASE_DIR"
 cat $BASE_DIR/welcome-header.txt
 printHelp
 while $RUNNING; do
-  read -e -p "Enter option:" userOption
+  read -e -p "Enter option: " userOption
   case $userOption in
   "e" | "exit")
     echo "Entered exit. Goodbye."

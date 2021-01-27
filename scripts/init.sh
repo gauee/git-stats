@@ -5,7 +5,7 @@ printOption() {
 }
 
 initRepo() {
-  read -e -p "Please enter the location of git repository:" repoLocation
+  read -e -p "Please enter the location of git repository: " repoLocation
   isGitRepo=$(
     cd $repoLocation
     if [ -d .git ]; then echo "yes"; else echo "no"; fi
@@ -14,7 +14,7 @@ initRepo() {
   while [ "yes" != "$isGitRepo" ]; do
     invalidRepoLocation=$repoLocation
     echo "Previously entered location ($invalidRepoLocation) is not a git repo."a
-    read -e -p "Please enter the location of git repository:" repoLocation
+    read -e -p "Please enter the location of git repository: " repoLocation
     isGitRepo=$(
       cd $repoLocation
       if [ -d .git ]; then echo "yes"; else echo "no"; fi
