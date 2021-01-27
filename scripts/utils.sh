@@ -1,8 +1,8 @@
 #!/bin/bash
 
 log_debug() {
-  if [[ $DEBUG_ENABLED ]]; then
-    echo "$(date): $1"
+  if [[ "$DEBUG_ENABLED" == "1" ]]; then
+    echo >&2 "$(date): $*"
   fi
 }
 
@@ -27,9 +27,15 @@ print_sub_header() {
   echo "${line:${#left_half}} $1 ${line:${#right_half}}"
 }
 
+get_uniq_sorted_count() {
+  while read -r _line; do
+    echo "$_line"
+  done | sort | uniq -c | sort | sed 's/ \[/,\[/'
+}
+
 get_top_n_results() {
-  number_of_results=${1:-10}
-  while read line; do
-    echo "$line"
-  done | sort | uniq -c | sort | tail -n $number_of_results | tac
+  _number_of_results=$(($1))
+  while read -r _line; do
+    echo "$_line"
+  done | tail -n $_number_of_results | tac
 }

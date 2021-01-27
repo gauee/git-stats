@@ -13,7 +13,7 @@ log_debug "BASE_DIR: $BASE_DIR"
 cat "$BASE_DIR/welcome-header.txt"
 print_help
 while $RUNNING; do
-  read -e -p "Enter option: " _user_option
+  read -r -e -p "Enter option: " _user_option
   case $_user_option in
   "e" | "exit")
     echo "Entered exit. Goodbye."

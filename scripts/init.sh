@@ -1,23 +1,24 @@
 #!/bin/bash
 
 init_repo() {
-  read -e -p "Please enter the location of git repository: " _repo_location
+  read -r -e -p "Please enter the location of git repository: " _repo_location
   _is_git_repo=$(
-    cd "$_repo_location"
-    if [ -d .git ]; then echo "yes"; else echo "no"; fi
+    cd "$_repo_location" &&
+      if [ -d .git ]; then echo "yes"; else echo "no"; fi
   )
-  log_debug $_is_git_repo
+  log_debug "$_is_git_repo"
   while [ "yes" != "$_is_git_repo" ]; do
     invalid_repo_location=$_repo_location
     echo "Previously entered location ($invalid_repo_location) is not a git repo."a
-    read -e -p "Please enter the location of git repository: " _repo_location
+    read -r -e -p "Please enter the location of git repository: " _repo_location
     _is_git_repo=$(
-      cd $_repo_location
-      if [ -d .git ]; then echo "yes"; else echo "no"; fi
+      cd "$_repo_location" &&
+        if [ -d .git ]; then echo "yes"; else echo "no"; fi
     )
-    log_debug $_is_git_repo
+    log_debug "$_is_git_repo"
   done
   log_debug "Changing location to: $_repo_location"
+  cd "$_repo_location" || echo "Unable to change directory to $_repo_location"
 }
 
 print_help() {
