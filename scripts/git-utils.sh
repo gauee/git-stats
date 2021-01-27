@@ -46,3 +46,8 @@ get_git_logs_with_changes() {
   fi
   log_debug "Finished"
 }
+
+get_git_tags_by_pattern() {
+  __tag_pattern=$1
+  git tag --sort=-creatordate -l $__tag_pattern
+}

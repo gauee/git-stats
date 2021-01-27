@@ -20,6 +20,25 @@ commits_count_by_date() {
   get_git_logs_with_date_format "" "%Y" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
 }
 
+count_commits_between_tags() {
+  _prev_tag=""
+  tac | while read -r _next_tag; do
+    if [[ -z $_prev_tag ]]; then
+      echo "$_next_tag, N/A"
+    else
+      echo "$_next_tag,$(git rev-list --count ${_prev_tag}..${_next_tag})"
+    fi
+    _prev_tag="$_next_tag"
+  done | tac
+}
+
+commits_count_by_release() {
+  read -r -e -p "Enter tag release pattern: " _commits_tag_release_pattern
+  print_sub_header "Commits between releases"
+  echo "#releaseTag,#Added commits"
+  get_git_tags_by_pattern "$_commits_tag_release_pattern" | count_commits_between_tags
+}
+
 measure_commits() {
   _commits_running=true
   commits_print_help
@@ -30,7 +49,7 @@ measure_commits() {
       commits_count_by_date
       ;;
     "2" | "release")
-      echo "Counting by release is not implemented yet."
+      commits_count_by_release
       ;;
     "e" | "exit")
       echo "Exiting count of commits"
