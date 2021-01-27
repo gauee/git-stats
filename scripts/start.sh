@@ -2,13 +2,14 @@
 
 DEBUG_ENABLED=1
 RUNNING=true
-BASE_DIR=$(dirname $(realpath $0))
-source $BASE_DIR/utils.sh
-source $BASE_DIR/init.sh
+BASE_DIR=$(dirname "$(realpath "$0")")
+source "$BASE_DIR/utils.sh"
+source "$BASE_DIR/init.sh"
+source "$BASE_DIR/contributors-performance.sh"
 
 log_debug "BASE_DIR: $BASE_DIR"
 
-cat $BASE_DIR/welcome-header.txt
+cat "$BASE_DIR/welcome-header.txt"
 print_help
 while $RUNNING; do
   read -e -p "Enter option: " _user_option
@@ -19,9 +20,10 @@ while $RUNNING; do
     ;;
   "i" | "ri" | "init" | "reinit")
     init_repo
+    print_help
     ;;
-  "1" | "contributors-performance")
-    echo"124"
+  "1" | "contributors")
+    measure_contributors_activity
     ;;
   "h" | "help")
     print_help
