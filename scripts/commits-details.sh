@@ -24,7 +24,7 @@ count_commits_between_tags() {
   _prev_tag=""
   tac | while read -r _next_tag; do
     if [[ -z $_prev_tag ]]; then
-      echo "$_next_tag, N/A"
+      echo "$_next_tag, 0"
     else
       echo "$_next_tag,$(git rev-list --count ${_prev_tag}..${_next_tag})"
     fi
