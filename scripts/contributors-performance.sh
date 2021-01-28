@@ -47,13 +47,13 @@ get_contributors_with_the_most_number_of_commits() {
   _number_of_contributors=$(($1))
   log_debug "Number of contributors to fetch: $_number_of_contributors"
   print_sub_header "Top $_number_of_contributors in last month"
-  echo "#commits,Author"
+  echo "Author,#commits"
   get_git_logs --since="last month" | awk -F\| '{print $4}' | get_uniq_sorted_count | get_top_n_results $_number_of_contributors
   print_sub_header "Top $_number_of_contributors in last year"
-  echo "#commits,Author"
+  echo "Author,#commits"
   get_git_logs --since="last year" | awk -F\| '{print $4}' | get_uniq_sorted_count | get_top_n_results $_number_of_contributors
   print_sub_header "Top $_number_of_contributors in entire history"
-  echo "#commits,Author"
+  echo "Author,#commits"
   get_git_logs | awk -F\| '{print $4}' | get_uniq_sorted_count | get_top_n_results $_number_of_contributors
 }
 
@@ -75,10 +75,10 @@ measure_contributors_activity() {
     read -r -e -p "Enter option: " __contributors_user_option
     case $__contributors_user_option in
     "1" | "commits")
-      get_contributors_with_the_most_number_of_commits 5
+      get_contributors_with_the_most_number_of_commits 5 | export_collect_output
       ;;
     "2" | "changes")
-      get_contributors_with_the_most_number_of_changes 5
+      get_contributors_with_the_most_number_of_changes 5 | export_collect_output
       ;;
     "e" | "exit")
       echo "Exiting measure of contributors activity"

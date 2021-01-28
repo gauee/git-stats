@@ -10,13 +10,13 @@ commits_print_help() {
 
 commits_count_by_date() {
   print_sub_header "Commits in last month"
-  echo "#commits,YYYYMMDD"
+  echo "YYYYMMDD,#commits"
   get_git_logs_with_date_format --since="last month" "%Y%m%d" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
   print_sub_header "Commits in year month"
-  echo "#commits,YYYYMM"
+  echo "YYYYMM,#commits"
   get_git_logs_with_date_format --since="last year" "%Y%m" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
   print_sub_header "Commits by year"
-  echo "#commits,YYYY"
+  echo "YYYY,#commits"
   get_git_logs_with_date_format "" "%Y" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
 }
 
@@ -35,7 +35,7 @@ count_commits_between_tags() {
 commits_count_by_release() {
   read -r -e -p "Enter tag release pattern: " _commits_tag_release_pattern
   print_sub_header "Commits between releases"
-  echo "#releaseTag,#Added commits"
+  echo "releaseTag,#Added commits"
   get_git_tags_by_pattern "$_commits_tag_release_pattern" | count_commits_between_tags
 }
 
@@ -46,10 +46,10 @@ measure_commits() {
     read -r -e -p "Enter option: " _commits_user_option
     case "$_commits_user_option" in
     "1" | "date")
-      commits_count_by_date
+      commits_count_by_date | export_collect_output
       ;;
     "2" | "release")
-      commits_count_by_release
+      commits_count_by_release | export_collect_output
       ;;
     "e" | "exit")
       echo "Exiting count of commits"

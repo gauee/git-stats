@@ -30,7 +30,7 @@ print_sub_header() {
 get_uniq_sorted_count() {
   while read -r _line; do
     echo "$_line"
-  done | sort | uniq -c | sort | sed 's/^ *//' | sed 's/\([0-9]\) /\1,/'
+  done | sort | uniq -c | sort | sed 's/^ *//' | sed 's/\([0-9]\+\) \(.*\)$/\2,\1/'
 }
 
 get_top_n_results() {

@@ -9,13 +9,13 @@ tags_print_help() {
 
 tags_count_by_date() {
   print_sub_header "Tags in last month"
-  echo "#tags,YYYYMMDD"
+  echo "YYYYMMDD,#tags"
   get_git_tags_in_date_period "%Y%m%d" --since="last month" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
   print_sub_header "Tags in year month"
-  echo "#tags,YYYYMM"
+  echo "YYYYMM,#tags"
   get_git_tags_in_date_period "%Y%m" --since="last year" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
   print_sub_header "Tags by year"
-  echo "#tags,YYYY"
+  echo "YYYY,#tags"
   get_git_tags_in_date_period "%Y" | awk -F\| '{print $2}' | get_uniq_sorted_count | sort -n -t, -k2 | tac
 }
 
@@ -26,7 +26,7 @@ measure_tags() {
     read -r -e -p "Enter option: " _tags_user_option
     case "$_tags_user_option" in
     "1" | "date")
-      tags_count_by_date
+      tags_count_by_date | export_collect_output
       ;;
     "e" | "exit")
       echo "Exiting count of commits"
