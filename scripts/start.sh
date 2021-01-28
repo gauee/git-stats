@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEBUG_ENABLED=1
+#DEBUG_ENABLED=1
 RUNNING=true
 BASE_DIR=$(dirname "$(realpath "$0")")
 source "$BASE_DIR/utils.sh"
