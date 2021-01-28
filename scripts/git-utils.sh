@@ -14,11 +14,11 @@ get_git_logs_with_date_format() {
   __extra_params="$1"
   __date_format="$2"
   [[ -z $__date_format ]] && __date_format='%a,%Y-%m-%d %H:%M:%S %z'
-  log_debug "Extra params: '$__extra_params', Date format: '$___date_format'"
+  log_debug "Extra params: '$__extra_params', Date format: '$__date_format'"
   if [[ -z "$__extra_params" ]]; then
-    git log --date=format:$__date_format --pretty=format:"%H|%cd|%an|[%ae]|"
+    git log --date=format:"$__date_format" --pretty=format:"%H|%cd|%an|[%ae]|"
   else
-    git log "${__extra_params}" --date=format:$__date_format --pretty=format:"%H|%cd|%an|[%ae]|"
+    git log "${__extra_params}" --date=format:"$__date_format" --pretty=format:"%H|%cd|%an|[%ae]|"
   fi
 }
 
@@ -49,5 +49,20 @@ get_git_logs_with_changes() {
 
 get_git_tags_by_pattern() {
   __tag_pattern=$1
-  git tag --sort=-creatordate -l $__tag_pattern
+  git tag --sort=-creatordate -l "$__tag_pattern"
+}
+
+get_git_tags_in_date_period() {
+  __date_format=$1
+  __extra_params=$2
+  if [[ -z "$__extra_params" ]]; then
+    _git_params="-n 1"
+  else
+    _git_params="$__extra_params"
+  fi
+  git tag --sort=-creatordate |
+    while read -r _tag; do
+      if [[ -z "$(git log "$_tag" --oneline "$_git_params" | head -1)" ]]; then break; fi
+      echo "$_tag|$(git log --date=format:"$__date_format" --pretty=format:'%cd' "$_git_params" "$_tag" | head -1)"
+    done
 }
