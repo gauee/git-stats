@@ -30,6 +30,7 @@ print_help() {
     print_option "ri, reinit" "to change the git repo"
     print_option "1, contributors" "to measure contributors activity"
     print_option "2, commits" "to count commit details"
+    print_option "3, tags" "to count commit details"
   fi
   print_option "h, help" "to print help with available options"
   print_option "e, exit" "to exit the program"

@@ -7,6 +7,7 @@ source "$BASE_DIR/utils.sh"
 source "$BASE_DIR/init.sh"
 source "$BASE_DIR/contributors-performance.sh"
 source "$BASE_DIR/commits-details.sh"
+source "$BASE_DIR/tags-details.sh"
 source "$BASE_DIR/git-utils.sh"
 
 log_debug "BASE_DIR: $BASE_DIR"
@@ -29,6 +30,9 @@ while $RUNNING; do
     ;;
   "2" | "commits")
     measure_commits
+    ;;
+  "3" | "tags")
+    measure_tags
     ;;
   "h" | "help")
     print_help
