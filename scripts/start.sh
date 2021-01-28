@@ -9,6 +9,7 @@ source "$BASE_DIR/contributors-performance.sh"
 source "$BASE_DIR/commits-details.sh"
 source "$BASE_DIR/tags-details.sh"
 source "$BASE_DIR/git-utils.sh"
+source "$BASE_DIR/export-utils.sh"
 
 log_debug "BASE_DIR: $BASE_DIR"
 
@@ -33,6 +34,14 @@ while $RUNNING; do
     ;;
   "3" | "tags")
     measure_tags
+    ;;
+  "0" | "export")
+    if [[ -z "$EXPORT_ACTIVATED" ]]; then
+      export_activate
+    else
+      export_deactivate
+    fi
+    print_help
     ;;
   "h" | "help")
     print_help

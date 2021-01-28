@@ -32,6 +32,11 @@ print_help() {
     print_option "2, commits" "to count commit details"
     print_option "3, tags" "to count commit details"
   fi
+  if [[ -z "$EXPORT_ACTIVATED" ]]; then
+    print_option "0, export" "to activate data export to csv"
+  else
+    print_option "0, export" "to deactivate data export to csv"
+  fi
   print_option "h, help" "to print help with available options"
   print_option "e, exit" "to exit the program"
 }
